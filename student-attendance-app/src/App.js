@@ -8,6 +8,7 @@ function App() {
       <header className="App-header">
         <img src={logo2} className="App-logo" alt="logo" />
         <p>ALSET Student Attendance Admin Panel</p>
+        <p>Restricted Area</p>
         {/* <p>
           Edit <code>src/App.js</code> and save to reload.
         </p> */}
