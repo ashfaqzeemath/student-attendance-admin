@@ -121,6 +121,7 @@ const EnterLecturerPage = () => {
                 <FormGroup>
                     <Label for="gender">Gender</Label>
                     <Input className="mb-2" type="select" value={gender} onChange={(event) => setGender(event.target.value)}>
+                        <option value="">-</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </Input>

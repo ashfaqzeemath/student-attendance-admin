@@ -1,5 +1,5 @@
 import Page from 'components/Page';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   Card,
@@ -14,8 +14,60 @@ import {
   Label,
   Row,
 } from 'reactstrap';
+import { postStudent } from '../service/student.service';
 
 const EnterStudentPage = () => {
+  const [studentId, setStudentId] = useState("")
+  const [fName, setFName] = useState("")
+  const [lName, setLName] = useState("")
+  const [gender, setGender] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [district, setDistrict] = useState("")
+  const [sourceImageKey, setSourceImageKey] = useState("")
+  const [dob, setdob] = useState("")
+  const [courseId, setCourseId] = useState("")
+
+  const InitStudentError = { errorMessage: "",
+                              overall: false,
+                              required: false,
+                              inavlid: false };
+
+  const [studentError, setStudentError] = useState(InitStudentError);
+
+  const OnSubmit = () => {
+    if (studentError.overall) {
+      return;
+    }
+
+    const body = {"student_id":studentId,"f_name":fName,"l_name":lName,"district":district,"source_image_key":sourceImageKey,
+                  "dob":dob,"gender":gender,"course_id":courseId,"email":email,"phone":phone,"type":"student"};
+    postStudent(body)
+    .then(
+      res => res.json()
+    )
+    .then(json => {
+      
+      console.log("Json status:" || json.status)
+      if (json && json.status === "successful" ) {
+        //call was sucssess.
+        setStudentId("");
+        setFName("");
+        setLName("");
+        setDistrict("");
+        setSourceImageKey("");
+        setdob("");
+        setCourseId("");
+        setEmail("");
+        setPhone("");
+        setStudentError(InitStudentError);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   return (
     <Page title="Enter Student" breadcrumbs={[{ name: 'Enter Student', active: true }]}>
       <Row>
@@ -24,30 +76,88 @@ const EnterStudentPage = () => {
             <CardHeader>Student Form</CardHeader>
             <CardBody>
               <Form>
-                <FormGroup>
-                    <Label for="fname">First Name</Label>
+              <FormGroup>
+                    <Label for="student_id">Student ID</Label>
                     <Input 
                         type="text"
-                        name="fname"/>
+                        name="student_id"
+                        value={studentId}
+                        onChange={(event) => setStudentId(event.target.value)}
+                        onBlur={(event) => {
+                          if (event.target.value.trim() === "") {
+                            setStudentError({errorMessage: "This field is required",
+                                            overall: true,
+                                            required: true,
+                                            inavlid: false})
+                          }
+                        }} />
+                    {studentError.overall && <span>{studentError.errorMessage}</span>}
                 </FormGroup>
                 <FormGroup>
-                    <Label for="lname">Last Name</Label>
+                    <Label for="f_name">First Name</Label>
                     <Input 
                         type="text"
-                        name="lname"/>
+                        name="f_name"
+                        onChange={(event) => setFName(event.target.value)}
+                        onBlur={(event) => {
+                          if (event.target.value.trim() === "") {
+                            setStudentError({errorMessage: "This field is required",
+                                            overall: true,
+                                            required: true,
+                                            inavlid: false})
+                          }
+                        }} />
+                    {studentError.overall && <span>{studentError.errorMessage}</span>}
+                </FormGroup>
+                <FormGroup>
+                    <Label for="l_name">Last Name</Label>
+                    <Input 
+                        type="text"
+                        name="l_name"
+                        onChange={(event) => setLName(event.target.value)}
+                        onBlur={(event) => {
+                          if (event.target.value.trim() === "") {
+                            setStudentError({errorMessage: "This field is required",
+                                            overall: true,
+                                            required: true,
+                                            inavlid: false})
+                          }
+                        }} />
+                    {studentError.overall && <span>{studentError.errorMessage}</span>}
+                </FormGroup>
+                <FormGroup>
+                    <Label for="course_id">Gender</Label>
+                    <Input className="mb-2" type="select" value={courseId} onChange={(event) => setCourseId(event.target.value)}>
+                        <option value="">-</option>
+                        <option value="IT">IT</option>
+                        <option value="IS">IS</option>
+                        <option value="IM">IM</option>
+                        <option value="MBA">MBA</option>
+                    </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="gender">Gender</Label>
-                    <Input className="mb-2" type="select">
-                        <option>Male</option>
-                        <option>Female</option>
+                    <Input className="mb-2" type="select" value={gender} onChange={(event) => setGender(event.target.value)}>
+                        <option value="">-</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
                     </Input>
                 </FormGroup>
                 <FormGroup>
                 <Label for="district">District</Label>
                     <Input
                     type="text"
-                    name="district" />
+                    name="district" 
+                    onChange={(event) => setDistrict(event.target.value)}
+                    onBlur={(event) => {
+                      if (event.target.value.trim() === "") {
+                        setStudentError({errorMessage: "This field is required",
+                                        overall: true,
+                                        required: true,
+                                        inavlid: false})
+                      }
+                    }} />
+                {studentError.overall && <span>{studentError.errorMessage}</span>}
                 </FormGroup>
                 <FormGroup>
                   <Label for="Email">Email</Label>
@@ -55,7 +165,16 @@ const EnterStudentPage = () => {
                     type="email"
                     name="email"
                     placeholder="abc@gmail.com"
-                  />
+                    onChange={(event) => setEmail(event.target.value)}
+                    onBlur={(event) => {
+                      if (event.target.value.trim() === "") {
+                        setStudentError({errorMessage: "This field is required",
+                                        overall: true,
+                                        required: true,
+                                        inavlid: false})
+                      }
+                    }} />
+                {studentError.overall && <span>{studentError.errorMessage}</span>}
                 </FormGroup>                
                 <FormGroup>
                   <Label for="phone">Phone Number</Label>
@@ -64,7 +183,16 @@ const EnterStudentPage = () => {
                     name="phone"
                     id="phone"
                     placeholder="07771234567"
-                  />
+                    onChange={(event) => setPhone(event.target.value)}
+                    onBlur={(event) => {
+                      if (event.target.value.trim() === "") {
+                        setStudentError({errorMessage: "This field is required",
+                                        overall: true,
+                                        required: true,
+                                        inavlid: false})
+                      }
+                    }} />
+                {studentError.overall && <span>{studentError.errorMessage}</span>}
                 </FormGroup>
                 <FormGroup>
                   <Label for="dob">Date of Birth</Label>
@@ -73,7 +201,16 @@ const EnterStudentPage = () => {
                     name="dob"
                     id="exampleDate"
                     placeholder="date placeholder"
-                  />
+                    onChange={(event) => setdob(event.target.value)}
+                    onBlur={(event) => {
+                      if (event.target.value.trim() === "") {
+                        setStudentError({errorMessage: "This field is required",
+                                        overall: true,
+                                        required: true,
+                                        inavlid: false})
+                      }
+                    }} />
+                {studentError.overall && <span>{studentError.errorMessage}</span>}
                 </FormGroup>
                 <FormGroup>
                   <Label for="exampleFile">Student Image</Label>
@@ -84,7 +221,7 @@ const EnterStudentPage = () => {
                 </FormGroup>
                 <FormGroup check row>
                   <Col sm={{ size: 10, offset: 2 }}>
-                    <Button>Submit</Button>
+                    <Button onClick={OnSubmit}>Submit</Button>
                   </Col>
                 </FormGroup>
               </Form>
