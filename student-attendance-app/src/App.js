@@ -12,6 +12,7 @@ const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
 const EnterStudentPage = React.lazy(() => import('pages/EnterStudentPage'));
 const EnterLecturerPage = React.lazy(() => import('pages/EnterLecturerPage'));
 const EnterModulePage = React.lazy(() => import('pages/EnterModulePage'));
+const EnterCoursePage = React.lazy(() => import('pages/EnterCoursePage'));
 const ViewStudentsPage = React.lazy(() => import('pages/ViewStudentsPage'));
 const ViewLecturersPage = React.lazy(() => import('pages/ViewLecturersPage'));
 const ViewModulesPage = React.lazy(() => import('pages/ViewModulesPage'));
@@ -50,6 +51,7 @@ class App extends React.Component {
                 <Route exact path="/enter_student_page" component={EnterStudentPage} />
                 <Route exact path="/view_students_page" component={ViewStudentsPage} />
                 <Route exact path="/enter_lecturer_page" component={EnterLecturerPage} />
+                <Route exact path="/enter_course_page" component={EnterCoursePage} />
                 <Route exact path="/view_lecturers_page" component={ViewLecturersPage} />
                 <Route exact path="/enter_module_page" component={EnterModulePage} />
                 <Route exact path="/view_modules_page" component={ViewModulesPage} />

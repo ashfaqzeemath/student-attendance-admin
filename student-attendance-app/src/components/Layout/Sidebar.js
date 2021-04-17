@@ -55,6 +55,9 @@ const navModules = [
   { to: '/enter_module_page', name: 'enter module', exact: false, Icon: MdChromeReaderMode },
   { to: '/view_modules_page', name: 'view modules', exact: false, Icon: MdChromeReaderMode },
 ];
+const navCourses = [
+  { to: '/enter_course_page', name: 'enter course', exact: false, Icon: MdChromeReaderMode },
+];
 
 const pageContents = [
   { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle },
@@ -72,6 +75,7 @@ class Sidebar extends React.Component {
     isOpenStudents: false,
     isOpenLecturers: false,
     isOpenModules: false,
+    isOpenCourses: false,
     isOpenComponents: true,
     isOpenContents: true,
     isOpenPages: true,
@@ -227,6 +231,46 @@ class Sidebar extends React.Component {
             </NavItem>
             <Collapse isOpen={this.state.isOpenModules}>
               {navModules.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+            
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Courses')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <span className=" align-self-start">Courses</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenCourses
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenCourses}>
+              {navCourses.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
                     id={`navItem-${name}-${index}`}
