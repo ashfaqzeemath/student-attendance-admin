@@ -21,12 +21,12 @@ const EnterCoursePage = () => {
   const [courseId, setCourseId] = useState("")
   const [courseName, setCourseName] = useState("")
   
-    const InitCourseIdError = { errorMessage: "",
+  const InitCourseError = {   errorMessage: "",
                                 overall: false,
                                 required: false,
                                 inavlid: false };
 
-  const [courseIdError, setCourseIdError] = useState(InitCourseIdError);
+  const [courseIdError, setCourseIdError] = useState(InitCourseError);
 
   const OnSubmit = () => {
     if (courseIdError.overall) {
@@ -43,7 +43,7 @@ const EnterCoursePage = () => {
         //call was sucssess.
         setCourseId("");
         setCourseName("");
-        setCourseIdError(InitCourseIdError);
+        setCourseIdError(InitCourseError);
       }
     })
     .catch(err => {
