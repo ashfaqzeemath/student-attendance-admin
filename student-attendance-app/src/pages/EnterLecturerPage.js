@@ -25,9 +25,9 @@ const EnterLecturerPage = () => {
   const [gender, setGender] = useState("")
 
   const InitLecturerError = { errorMessage: "",
-                            overall: false,
-                            required: false,
-                            inavlid: false };
+                              overall: false,
+                              required: false,
+                              inavlid: false };
 
   const [lecturerError, setLecturerError] = useState(InitLecturerError);
 
@@ -49,7 +49,6 @@ const EnterLecturerPage = () => {
         setMobile("");
         setFName("");
         setLName("");
-        // setGender("");
         setLecturerError(InitLecturerError);
       }
     })

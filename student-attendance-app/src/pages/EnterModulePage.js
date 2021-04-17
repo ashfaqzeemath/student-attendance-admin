@@ -23,10 +23,10 @@ const EnterModulePage = () => {
   const [lecturerId, setLecturerId] = useState("")
   const [courseId, setCourseId] = useState("")
   
-const InitModuleIdError = {errorMessage: "",
-                          overall: false,
-                          required: false,
-                          inavlid: false};
+  const InitModuleIdError = { errorMessage: "",
+                              overall: false,
+                              required: false,
+                              inavlid: false};
 
   const [moduleIdError, setmoduleIdError] = useState(InitModuleIdError);
 
