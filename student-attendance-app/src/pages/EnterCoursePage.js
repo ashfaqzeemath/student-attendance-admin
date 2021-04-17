@@ -21,10 +21,10 @@ const EnterCoursePage = () => {
   const [courseId, setCourseId] = useState("")
   const [courseName, setCourseName] = useState("")
   
-const InitCourseIdError = {errorMessage: "",
-                          overall: false,
-                          required: false,
-                          inavlid: false};
+    const InitCourseIdError = { errorMessage: "",
+                                overall: false,
+                                required: false,
+                                inavlid: false };
 
   const [courseIdError, setCourseIdError] = useState(InitCourseIdError);
 

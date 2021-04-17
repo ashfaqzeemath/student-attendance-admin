@@ -16,6 +16,16 @@ import {
 } from 'reactstrap';
 
 const EnterLecturerPage = () => {
+  // {"lecturer_id":"ml20000","email":"chathraserasinghe89@gmail.com",
+  //  "mobile":"1234567890","f_name":"shyam","l_name":"reyal","gender":"M","type":"lecturer"}
+  const [lecturerId, setlecturerId] = useState("")
+  const [email, setEmail] = useState("")
+  const [mobile, setMobile] = useState("")
+  const [fName, setFName] = useState("")
+  const [lName, setLName] = useState("")
+  const [gender, setGender] = useState("")
+  // const [type, setType] = useState("lecturer")
+
   return (
     <Page title="Enter Lecturer" breadcrumbs={[{ name: 'Enter Lecturer', active: true }]}>
       <Row>
