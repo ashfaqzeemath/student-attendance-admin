@@ -1,10 +1,40 @@
 import Page from 'components/Page';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { getLecturer } from '../service/lecturer.service';
 
 const tableTypes = ['hover'];
 
 const ViewLecturersPage = () => {
+  const [lecturers, setLecturers] = useState([]);
+
+  const fetchLecturer = () => {
+    getLecturer()
+    .then(
+      res => res.json()
+    )
+    .then(json => {
+      console.log(JSON.stringify(json, null, 2));
+      if (json && json.status === "successful" ) {
+        //call was sucssess.
+        console.log(json);
+        setLecturers(json.results);
+        
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  useEffect(() => {
+    fetchLecturer();
+    return () => {
+      
+    }
+  }, [])
+
+
   return (
     <Page
       title="Lectures Overview"
@@ -23,19 +53,23 @@ const ViewLecturersPage = () => {
                         <thead>
                           <tr>
                             <th>#</th>
+                            <th>Lecturer ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Username</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
+                          {lecturers && lecturers.length > 0 && lecturers.map((lecturer, index) => 
+                              (
+                                <tr key={lecturer.lecturer_id}>
+                                  <td>{index+1}</td>
+                                  <td>{lecturer.lecturer_id}</td>
+                                  <td>{lecturer.f_name}</td>
+                                  <td>{lecturer.l_name}</td>
+                                </tr>
+                              )
+                            ) }
+                          {/* <tr>
                             <th scope="row">2</th>
                             <td>Jacob</td>
                             <td>Thornton</td>
@@ -46,7 +80,7 @@ const ViewLecturersPage = () => {
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>@twitter</td>
-                          </tr>
+                          </tr> */}
                         </tbody>
                       </Table>
                     </Card>

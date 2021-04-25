@@ -2,8 +2,21 @@ import logo200Image from 'assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { signIn } from '../service/auth.service';
+import { withRouter } from 'react-router-dom'
 
 class AuthForm extends React.Component {
+  
+
+  constructor(props) {
+    super(props);    
+    const initInputError = { errorMessage: "",
+                              overall: false,
+                              required: false,
+                              inavlid: false };
+    this.state = {email: "", password: "", emailError: initInputError, passwordError: initInputError}
+  }
+
   get isLogin() {
     return this.props.authState === STATE_LOGIN;
   }
@@ -19,7 +32,28 @@ class AuthForm extends React.Component {
   };
 
   handleSubmit = event => {
-    event.preventDefault();
+    
+    //   console.log('Handle submit:',JSON.stringify(this.props, null, 2));
+    // event.preventDefault();
+    if (!this.state.emailError.overall && !this.state.passwordError.overall) {     
+      // this.props.history.push("/"); 
+      
+      signIn(this.state.email, this.state.password)
+      .then(
+        res => res.json()
+      )
+      .then(json => {
+        console.log(JSON.stringify(json, null, 2));
+        if (json && json.state === 201 ) {
+          //call was sucssess.
+          this.props.history.push("/");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+    
   };
 
   renderButtonText() {
@@ -49,8 +83,10 @@ class AuthForm extends React.Component {
       onLogoClick,
     } = this.props;
 
+
+
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form>
         {showLogo && (
           <div className="text-center pb-4">
             <img
@@ -64,11 +100,39 @@ class AuthForm extends React.Component {
         )}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} />
+          {/* <Input {...usernameInputProps} /> */}
+          <Input {...usernameInputProps} 
+                    value={this.state.email}
+                    onChange={(event) => this.setState({email: event.target.value})}
+                    onBlur={
+                      (event) => {
+                        if (event.target.value.trim() === "") {
+                          this.setState({emailError: 
+                                          {errorMessage: "This field is required",
+                                          overall: true,
+                                          required: true,
+                                          inavlid: false}})
+                        }
+                      }
+                    }/>
         </FormGroup>
         <FormGroup>
           <Label for={passwordLabel}>{passwordLabel}</Label>
-          <Input {...passwordInputProps} />
+          {/* <Input {...passwordInputProps} /> */}
+          <Input {...passwordInputProps} 
+                    value={this.state.password}
+                    onChange={(event) => this.setState({password: event.target.value})}
+                    onBlur={
+                      (event) => {
+                        if (event.target.value.trim() === "") {
+                          this.setState({passwordError: 
+                                          {errorMessage: "This field is required",
+                                          overall: true,
+                                          required: true,
+                                          inavlid: false}})
+                        }
+                      }
+                    }/>
         </FormGroup>
         {this.isSignup && (
           <FormGroup>
@@ -148,4 +212,4 @@ AuthForm.defaultProps = {
   onLogoClick: () => {},
 };
 
-export default AuthForm;
+export default withRouter (AuthForm);
