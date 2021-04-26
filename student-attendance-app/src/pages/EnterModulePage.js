@@ -43,8 +43,7 @@ const EnterModulePage = () => {
     .then(json => {
       if (json != null) {
         //call was sucssess.
-        console.log('Added...!!!');
-        alert("Succesfully Added")
+        alert("Succesfully Added");
         setModuleId("");
         setName("");
         setLecturerId("");
