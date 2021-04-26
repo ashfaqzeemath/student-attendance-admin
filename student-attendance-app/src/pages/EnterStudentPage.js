@@ -14,7 +14,7 @@ import {
   Label,
   Row,
 } from 'reactstrap';
-import { postStudent } from '../service/student.service';
+import { postStudent, postGenImgUrl } from '../service/student.service';
 
 const EnterStudentPage = () => {
   const [studentId, setStudentId] = useState("")
@@ -27,6 +27,7 @@ const EnterStudentPage = () => {
   const [sourceImageKey, setSourceImageKey] = useState("")
   const [dob, setdob] = useState("")
   const [courseId, setCourseId] = useState("")
+  const [imgUrl, setImgUrl] = useState("")
 
   const InitStudentError = { errorMessage: "",
                               overall: false,
@@ -35,6 +36,18 @@ const EnterStudentPage = () => {
 
   const [studentError, setStudentError] = useState(InitStudentError);
 
+  const OnBlurImg = () => {
+    var fileName = `${studentId}.jpg`;
+    const body = {"bucket": "student-faces-source","fileName": fileName};
+    postGenImgUrl(body)
+    .then(
+      res => res.json()
+    )
+    .then(json => {
+      console.log('URL created')
+    })
+  }
+  
   const OnSubmit = () => {
     if (studentError.overall) {
       return;
@@ -214,7 +227,14 @@ const EnterStudentPage = () => {
                 </FormGroup>
                 <FormGroup>
                   <Label for="exampleFile">Student Image</Label>
-                  <Input type="file" name="file" />
+                  <Input
+                    type="file"
+                    name="imgFile"
+                    onBlur={
+                      (event) => {
+                        OnBlurImg()
+                      }
+                    } />
                   <FormText color="muted">
                     Upload a passport size student image.
                   </FormText>
