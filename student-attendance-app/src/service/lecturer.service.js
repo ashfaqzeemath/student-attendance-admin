@@ -14,6 +14,6 @@ export const postLecturer = async (body) => {
     return response;
 };
 
-export const getLecturer = async () => {
+export const getLecturers = async () => {
   return fetchWithBasic (`${BASE_API_URL}/get-lecturers`);
 };

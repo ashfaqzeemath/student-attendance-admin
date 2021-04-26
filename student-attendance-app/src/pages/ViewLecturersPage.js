@@ -1,7 +1,7 @@
 import Page from 'components/Page';
 import React, {useState, useEffect} from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-import { getLecturer } from '../service/lecturer.service';
+import { getLecturers } from '../service/lecturer.service';
 
 const tableTypes = ['hover'];
 
@@ -10,10 +10,10 @@ const ViewLecturersPage = () => {
 
   const fetchLecturer = async () => {
     try {
-        const response = await getLecturer();
+        const response = await getLecturers();
         if (response.status === 200) {
           const result = await response.json();
-          console.log(result)
+          // console.log(result)
           setLecturers(result)
         } else {
           console.log('Error')
@@ -52,6 +52,9 @@ const ViewLecturersPage = () => {
                             <th>Lecturer ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -62,21 +65,12 @@ const ViewLecturersPage = () => {
                                   <td>{lecturer.lecturer_id}</td>
                                   <td>{lecturer.f_name}</td>
                                   <td>{lecturer.l_name}</td>
+                                  <td>{lecturer.gender}</td>
+                                  <td>{lecturer.email}</td>
+                                  <td>{lecturer.mobile}</td>
                                 </tr>
                               )
                             ) }
-                          {/* <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                          </tr> */}
                         </tbody>
                       </Table>
                     </Card>

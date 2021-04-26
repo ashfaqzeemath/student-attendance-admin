@@ -1,10 +1,35 @@
 import Page from 'components/Page';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { getModules } from '../service/module.service';
 
 const tableTypes = ['hover'];
 
 const ViewModulesPage = () => {
+  const [modules, setModules] = useState([]);
+
+  const fetchModules = async () => {
+    try {
+        const response = await getModules();
+        if (response.status === 200) {
+          const result = await response.json();
+          // console.log(result)
+          setModules(result)
+        } else {
+          console.log('Error')
+        }
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchModules();
+    return () => {
+      
+    }
+  }, [])
+
   return (
     <Page
       title="Modules Overview"
@@ -22,27 +47,23 @@ const ViewModulesPage = () => {
                       <Table {...{ [tableType || 'default']: true }}>
                         <thead>
                           <tr>
+                            <th>#</th>
                             <th>Module ID</th>
                             <th>Module Name</th>
-                            <th>Department</th>
+                            <th>Lecturer ID</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                          </tr>
+                          {modules && modules.length > 0 && modules.map((module, index) => 
+                              (
+                                <tr key={module.lecturer_id}>
+                                  <td>{index+1}</td>
+                                  <td>{module.module_id}</td>
+                                  <td>{module.name}</td>
+                                  <td>{module.lecturer_id}</td>
+                                </tr>
+                              )
+                            ) }
                         </tbody>
                       </Table>
                     </Card>
