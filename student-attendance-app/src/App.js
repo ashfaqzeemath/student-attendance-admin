@@ -16,6 +16,7 @@ const EnterCoursePage = React.lazy(() => import('pages/EnterCoursePage'));
 const ViewStudentsPage = React.lazy(() => import('pages/ViewStudentsPage'));
 const ViewLecturersPage = React.lazy(() => import('pages/ViewLecturersPage'));
 const ViewModulesPage = React.lazy(() => import('pages/ViewModulesPage'));
+const ViewCoursesPage = React.lazy(() => import('pages/ViewCoursesPage'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -52,6 +53,7 @@ class App extends React.Component {
                 <Route exact path="/view_students_page" component={ViewStudentsPage} />
                 <Route exact path="/enter_lecturer_page" component={EnterLecturerPage} />
                 <Route exact path="/enter_course_page" component={EnterCoursePage} />
+                <Route exact path="/view_courses_page" component={ViewCoursesPage} />
                 <Route exact path="/view_lecturers_page" component={ViewLecturersPage} />
                 <Route exact path="/enter_module_page" component={EnterModulePage} />
                 <Route exact path="/view_modules_page" component={ViewModulesPage} />

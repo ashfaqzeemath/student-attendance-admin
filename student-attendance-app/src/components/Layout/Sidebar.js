@@ -57,6 +57,7 @@ const navModules = [
 ];
 const navCourses = [
   { to: '/enter_course_page', name: 'enter course', exact: false, Icon: MdChromeReaderMode },
+  { to: '/view_courses_page', name: 'view courses', exact: false, Icon: MdChromeReaderMode },
 ];
 
 const pageContents = [
