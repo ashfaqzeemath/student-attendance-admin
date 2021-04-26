@@ -42,9 +42,10 @@ const EnterLecturerPage = () => {
       res => res.json()
     )
     .then(json => {
-      console.log(JSON.stringify(json, null, 2));
-      if (json && json.status === "successful" ) {
+      // console.log(JSON.stringify(json, null, 2));
+      if (json != null) {
         //call was sucssess.
+        alert("Succesfully Added");
         setLecturerId("");
         setEmail("");
         setMobile("");

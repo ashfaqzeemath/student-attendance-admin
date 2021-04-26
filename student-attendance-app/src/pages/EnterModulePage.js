@@ -41,10 +41,13 @@ const EnterModulePage = () => {
       res => res.json()
     )
     .then(json => {
-      if (json && json.status === "successful" ) {
+      if (json != null) {
         //call was sucssess.
+        console.log('Added...!!!');
+        alert("Succesfully Added")
         setModuleId("");
         setName("");
+        setLecturerId("");
         setmoduleIdError(InitModuleIdError);
       }
     })
@@ -88,7 +91,7 @@ const EnterModulePage = () => {
                         onChange={(event) => setName(event.target.value)} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="lecturer_id">Lecturer</Label>
+                    <Label for="lecturer_id">Lecturer ID</Label>
                     <Input 
                         type="text"
                         name="lecturer_id"
@@ -96,12 +99,14 @@ const EnterModulePage = () => {
                         onChange={(event) => setLecturerId(event.target.value)} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="course_id">Course Id</Label>
-                    <Input 
-                        type="text"
-                        name="course_id"
-                        value={courseId}
-                        onChange={(event) => setCourseId(event.target.value)} />
+                    <Label for="course_id">Course ID</Label>
+                    <Input className="mb-2" type="select" value={courseId} onChange={(event) => setCourseId(event.target.value)}>
+                        <option value="">-</option>
+                        <option value="IT">IT</option>
+                        <option value="IS">IS</option>
+                        <option value="IM">IM</option>
+                        <option value="MBA">MBA</option>
+                    </Input>
                 </FormGroup>
                 <FormGroup check row>
                   <Col sm={{ size: 10, offset: 2 }}>

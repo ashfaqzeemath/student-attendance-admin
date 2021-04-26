@@ -48,9 +48,9 @@ const EnterStudentPage = () => {
     )
     .then(json => {
       
-      console.log("Json status:" || json.status)
-      if (json && json.status === "successful" ) {
-        //call was sucssess.
+      if (json != null) {
+        //call was sucssess.        
+        alert("Succesfully Added");
         setStudentId("");
         setFName("");
         setLName("");
@@ -126,7 +126,7 @@ const EnterStudentPage = () => {
                     {studentError.overall && <span>{studentError.errorMessage}</span>}
                 </FormGroup>
                 <FormGroup>
-                    <Label for="course_id">Gender</Label>
+                    <Label for="course_id">Course ID</Label>
                     <Input className="mb-2" type="select" value={courseId} onChange={(event) => setCourseId(event.target.value)}>
                         <option value="">-</option>
                         <option value="IT">IT</option>

@@ -39,8 +39,9 @@ const EnterCoursePage = () => {
       res => res.json()
     )
     .then(json => {
-      if (json && json.status === "successful" ) {
+      if (json != null) {
         //call was sucssess.
+        alert("Succesfully Added");
         setCourseId("");
         setCourseName("");
         setCourseIdError(InitCourseError);
