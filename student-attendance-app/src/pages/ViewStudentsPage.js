@@ -1,10 +1,35 @@
 import Page from 'components/Page';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { getStudents } from '../service/student.service';
 
 const tableTypes = ['hover'];
 
 const ViewStudentsPage = () => {
+  const [students, setStudents] = useState([]);
+
+  const fetchStudents = async () => {
+    try {
+        const response = await getStudents();
+        if (response.status === 200) {
+          const result = await response.json();
+          console.log(result)
+          setStudents(result)
+        } else {
+          console.log('Error')
+        }
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchStudents();
+    return () => {
+      
+    }
+  }, [])
+
   return (
     <Page
       title="Students Overview"
@@ -23,30 +48,30 @@ const ViewStudentsPage = () => {
                         <thead>
                           <tr>
                             <th>#</th>
+                            <th>Student ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Username</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Date of Birth</th>
+                            <th>District</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                          </tr>
+                          {students && students.length > 0 && students.map((student, index) => 
+                                (
+                                  <tr key={student.student_id}>
+                                    <td>{index+1}</td>
+                                    <td>{student.student_id}</td>
+                                    <td>{student.f_name}</td>
+                                    <td>{student.l_name}</td>
+                                    <td>{student.phone}</td>
+                                    <td>{student.email}</td>
+                                    <td>{student.dob}</td>
+                                    <td>{student.district}</td>
+                                  </tr>
+                                )
+                              ) }
                         </tbody>
                       </Table>
                     </Card>
