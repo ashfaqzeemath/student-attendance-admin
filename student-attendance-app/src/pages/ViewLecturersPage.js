@@ -8,23 +8,19 @@ const tableTypes = ['hover'];
 const ViewLecturersPage = () => {
   const [lecturers, setLecturers] = useState([]);
 
-  const fetchLecturer = () => {
-    getLecturer()
-    .then(
-      res => res.json()
-    )
-    .then(json => {
-      console.log(JSON.stringify(json, null, 2));
-      if (json && json.status === "successful" ) {
-        //call was sucssess.
-        console.log(json);
-        setLecturers(json.results);
-        
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  const fetchLecturer = async () => {
+    try {
+        const response = await getLecturer();
+        if (response.status === 200) {
+          const result = await response.json();
+          console.log(result)
+          setLecturers(result)
+        } else {
+          console.log('Error')
+        }
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   useEffect(() => {

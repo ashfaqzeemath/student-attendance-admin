@@ -14,7 +14,7 @@ class AuthForm extends React.Component {
                               overall: false,
                               required: false,
                               inavlid: false };
-    this.state = {email: "", password: "", emailError: initInputError, passwordError: initInputError}
+    this.state = {username: "", password: "", usernameError: initInputError, passwordError: initInputError}
   }
 
   get isLogin() {
@@ -35,16 +35,16 @@ class AuthForm extends React.Component {
     
     //   console.log('Handle submit:',JSON.stringify(this.props, null, 2));
     // event.preventDefault();
-    if (!this.state.emailError.overall && !this.state.passwordError.overall) {     
+    if (this.state.username != null && this.state.password != null) {     
       // this.props.history.push("/"); 
       
-      signIn(this.state.email, this.state.password)
+      signIn(this.state.username, this.state.password)
       .then(
         res => res.json()
       )
       .then(json => {
         console.log(JSON.stringify(json, null, 2));
-        if (json && json.state === 201 ) {
+        if (json.statusCode === 200) {
           //call was sucssess.
           this.props.history.push("/");
         }
@@ -101,13 +101,14 @@ class AuthForm extends React.Component {
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
           {/* <Input {...usernameInputProps} /> */}
+          {console.log(usernameInputProps)}
           <Input {...usernameInputProps} 
-                    value={this.state.email}
-                    onChange={(event) => this.setState({email: event.target.value})}
+                    value={this.state.username}
+                    onChange={(event) => this.setState({username: event.target.value})}
                     onBlur={
                       (event) => {
                         if (event.target.value.trim() === "") {
-                          this.setState({emailError: 
+                          this.setState({usernameError: 
                                           {errorMessage: "This field is required",
                                           overall: true,
                                           required: true,
@@ -194,10 +195,10 @@ AuthForm.propTypes = {
 AuthForm.defaultProps = {
   authState: 'LOGIN',
   showLogo: true,
-  usernameLabel: 'Email',
+  usernameLabel: 'Username',
   usernameInputProps: {
-    type: 'email',
-    placeholder: 'your@email.com',
+    type: 'text',
+    placeholder: 'asze',
   },
   passwordLabel: 'Password',
   passwordInputProps: {

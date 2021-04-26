@@ -60,13 +60,13 @@ export const fetchWithBasic = async (
             body: JSON.stringify(body)
         }
     }
-
-    try {
-        const response = await fetch(url, options);
-        return Promise.resolve(response.json())
-    } catch (error) {
-        return Promise.reject(error);
-    }
+    return await fetch(url, options);
+    // try {
+    //     const response = await fetch(url, options);
+    //     return Promise.resolve(response.json())
+    // } catch (error) {
+    //     return Promise.reject(error);
+    // }
 }
 
 export const fetchWithAuth = async (

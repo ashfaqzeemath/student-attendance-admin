@@ -1,8 +1,8 @@
 import {APIConstants, APIUrl, LocalStorage} from "./constants";
 import {fetchWithBasic, logOut} from "./base.service";
 
-export const signIn = async (email, password) => {
-    if (!email || !password) {
+export const signIn = async (username, password) => {
+    if (!username || !password) {
         return;
     }
     try {
@@ -11,7 +11,7 @@ export const signIn = async (email, password) => {
             null,
             APIConstants.HTTP_POST,
             APIConstants.DEFAULT_HEADER,
-            {email, password}
+            {username, password}
         );
 
         if (json && json.success && json.data)
@@ -33,7 +33,7 @@ export const signUp = async (username, email, password) => {
             null,
             APIConstants.HTTP_POST,
             APIConstants.DEFAULT_HEADER,
-            {username, email, password}
+            {username, username, password}
         );
     } catch (err) {
         return Promise.reject(err);
