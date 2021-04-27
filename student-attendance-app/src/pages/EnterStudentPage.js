@@ -27,7 +27,10 @@ const EnterStudentPage = () => {
   const [sourceImageKey, setSourceImageKey] = useState("")
   const [dob, setdob] = useState("")
   const [courseId, setCourseId] = useState("")
+  const [imgFileName, setImgFileName] = useState("")
   const [imgUrl, setImgUrl] = useState("")
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
 
   const InitStudentError = { errorMessage: "",
                               overall: false,
@@ -44,9 +47,36 @@ const EnterStudentPage = () => {
       res => res.json()
     )
     .then(json => {
-      console.log('URL created')
+      // console.log(json.URL);
+      setImgUrl(json.URL)
+      setImgFileName(fileName)
     })
   }
+
+  const changeHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsFilePicked(true);
+	};
+  
+  const uploadHandler = () => {
+		const formData = new FormData();
+		formData.append('File', selectedFile, imgFileName);
+
+		fetch(
+			imgUrl,
+			{
+				method: 'POST',
+				body: formData,
+			}
+		)
+			.then((response) => response.json())
+			.then((result) => {
+				console.log('Success upload image:', result);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	};
   
   const OnSubmit = () => {
     if (studentError.overall) {
@@ -62,7 +92,7 @@ const EnterStudentPage = () => {
     .then(json => {
       
       if (json != null) {
-        //call was sucssess.        
+        //call was sucssess.     
         alert("Succesfully Added");
         setStudentId("");
         setFName("");
@@ -74,6 +104,7 @@ const EnterStudentPage = () => {
         setEmail("");
         setPhone("");
         setStudentError(InitStudentError);
+        uploadHandler();
       }
     })
     .catch(err => {
@@ -234,7 +265,8 @@ const EnterStudentPage = () => {
                       (event) => {
                         OnBlurImg()
                       }
-                    } />
+                    }
+                    onChange={changeHandler} />
                   <FormText color="muted">
                     Upload a passport size student image.
                   </FormText>
