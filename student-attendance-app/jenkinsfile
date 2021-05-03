@@ -11,6 +11,7 @@ pipeline {
                 dir('student-attendance-app') {
                   sh "pwd"
                   sh "ls -ltr"
+                  sh "rm -rf node_modules"
                   sh "sudo npm install"
                   sh "sudo npm run build"
                 }
