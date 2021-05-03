@@ -3,18 +3,19 @@ pipeline {
      stages {
         stage("Build") {
             steps {
-                sh "sudo yum install curl"
-                sh "ls -ltr"
-                sh "sudo amazon-linux-extras install nginx1.12"
-                sh "sudo rm -rf /var/www/students-attendance-react-app"
-                sh "sudo mkdir -p /var/www/students-attendance-react-app"
-                dir('student-attendance-app') {
-                  sh "pwd"
-                  sh "ls -ltr"
-                  sh "npm install"
-                  sh "npm run build"
+                nodejs(nodeJSInstallationName: 'NodeJS 14') {
+                    sh "sudo yum install curl"
+                    sh "ls -ltr"
+                    sh "sudo amazon-linux-extras install nginx1.12"
+                    sh "sudo rm -rf /var/www/students-attendance-react-app"
+                    sh "sudo mkdir -p /var/www/students-attendance-react-app"
+                    dir('student-attendance-app') {
+                    sh "pwd"
+                    sh "ls -ltr"
+                    sh "npm install"
+                    sh "npm run build"
+                    }
                 }
-              
             }
         }
         stage("Deploy") {
