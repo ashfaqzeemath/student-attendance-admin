@@ -67,7 +67,7 @@ class DashboardPage extends React.Component {
         title="Dashboard"
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
-        <Row>
+        {/* <Row>
           <Col lg={3} md={6} sm={6} xs={12}>
             <NumberWidget
               title="Total Profit"
@@ -119,7 +119,7 @@ class DashboardPage extends React.Component {
               }}
             />
           </Col>
-        </Row>
+        </Row> */}
 
         {/* <Row>
           <Col lg="8" md="12" sm="12" xs="12">
@@ -206,7 +206,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col> */}
 
-          <Col md="6" sm="12" xs="12">
+          {/* <Col md="6" sm="12" xs="12">
             <Card>
               <CardHeader>New Users</CardHeader>
               <CardBody>
@@ -222,8 +222,8 @@ class DashboardPage extends React.Component {
                 />
               </CardBody>
             </Card>
-          </Col>
-          <Col lg="4" md="12" sm="12" xs="12">
+          </Col> */}
+          {/* <Col lg="4" md="12" sm="12" xs="12">
             <AnnouncementCard
               color="gradient-secondary"
               header="Announcement"
@@ -236,7 +236,7 @@ class DashboardPage extends React.Component {
               }}
               style={{ height: 500 }}
             />
-          </Col>
+          </Col> */}
         </Row>
 
         {/* <Row>
@@ -346,6 +346,20 @@ class DashboardPage extends React.Component {
                 todayColor: secondaryColor,
                 weekdayColor: primaryColor,
               }}
+            />
+          </Col>
+          <Col lg="4" md="12" sm="12" xs="12">
+            <AnnouncementCard
+              color="gradient-secondary"
+              header="Announcement"
+              // avatarSize={60}
+              // name="Jamy"
+              date="1 hour ago"
+              text="Due to the prevailing situation of the country, SLIIT Malabe Campus will be closed for ALL on-campus activities until further notice. All academic activities will continue to be delivered online as usual."
+              buttonProps={{
+                children: 'show',
+              }}
+              style={{ height: 500 }}
             />
           </Col>
 
